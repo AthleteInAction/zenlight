@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    zenlight (1.0.2)
+    zenlight (1.0.3)
       rest-client (~> 2.1)
 
 GEM
