@@ -13,14 +13,18 @@ module Zenlight
     attr_reader :headers
 
     def initialize _response, _time = nil
-      @limit = _response.headers[:x_rate_limit].try(:to_i) || _response.headers[:x_ratelimit_limit_minute].try(:to_i) || _response.headers[:x_ratelimit_total].try(:to_i)
-      @remaining = _response.headers[:x_rate_limit_remaining].try(:to_i) || _response.headers[:x_ratelimit_remaining_minute].try(:to_i) || _response.headers[:x_ratelimit_remaining].try(:to_i)
+      @limit = _response.headers[:x_rate_limit] || _response.headers[:x_ratelimit_limit_minute] || _response.headers[:x_ratelimit_total]
+      @limit = @limit.to_i if @limit
+      @remaining = _response.headers[:x_rate_limit_remaining] || _response.headers[:x_ratelimit_remaining_minute] || _response.headers[:x_ratelimit_remaining]
+      @remaining = @remaining.to_i if @remaining
       @code = _response.code.to_i
-      if _response.headers[:content_type].try { |ct| ct.include?("application/json") } == true
-        begin
-          @json = JSON.parse(_response.body)
-        rescue
-          @json = nil
+      if content_type = _response.headers[:content_type]
+        if content_type.include?("application/json")
+          begin
+            @json = JSON.parse(_response.body)
+          rescue
+            @json = nil
+          end
         end
       else
         @json = nil
