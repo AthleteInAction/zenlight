@@ -6,7 +6,7 @@ require 'open-uri'
 module Zenlight
   module Requester
     def get _path, _params = nil
-      _user = self.config.email
+      _user = "#{self.config.email}"
       _user << "/token" if self.config.token
       setup = {
         method: __callee__.to_s,
