@@ -1,4 +1,5 @@
-:subdomain: 
+# Change this file's name to zendesk.yml
+:subdomain:
 :email:
 :password:
 :token:
