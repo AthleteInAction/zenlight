@@ -6,11 +6,13 @@ require 'open-uri'
 module Zenlight
   module Requester
     def get _path, _params = nil
+      _user = self.config.email
+      _user << "/token" if self.config.token
       setup = {
         method: __callee__.to_s,
         url: "https://#{self.config.subdomain}.zendesk.com" << _path,
-        user: "#{self.config.email}/token",
-        password: self.config.token,
+        user: _user,
+        password: self.config.token || self.config.password,
         headers: {
           accept: :json,
           content_type: :json

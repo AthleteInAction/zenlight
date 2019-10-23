@@ -14,6 +14,10 @@ module Zenlight
     def initialize
       self.rpm = 700
       self.api_path = "/api/v2"
+      self.subdomain = ENV['ZENLIGHT_SUBDOMAIN']
+      self.email = ENV['ZENLIGHT_EMAIL']
+      self.password = ENV['ZENLIGHT_PASSWORD']
+      self.token = ENV['ZENLIGHT_TOKEN']
     end
     def [](value)
       self.public_send(value)
